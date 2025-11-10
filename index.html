@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulaciones de Montecarlo</title>
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/reveal.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/theme/white.css">
+    
+    <style>
+        /* Configuración general */
+        .reveal {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .reveal .slides section {
+            text-align: left;
+            padding: 20px 40px;
+            box-sizing: border-box;
+            overflow: hidden;
+        }
+        
+        /* Títulos */
+        .reveal h1 {
+            color: #1a237e;
+            font-size: 1.8em;
+            font-weight: 700;
+            margin-bottom: 0.4em;
+            line-height: 1.2;
+        }
+        
+        .reveal h2 {
+            color: #283593;
+            font-size: 1.4em;
+            font-weight: 600;
+            margin-bottom: 0.5em;
+            margin-top: 0.3em;
+            line-height: 1.2;
+        }
+        
+        .reveal h3 {
+            color: #3949ab;
+            font-size: 1.2em;
+            font-weight: 600;
+            margin-bottom: 0.4em;
+            margin-top: 0.3em;
+            line-height: 1.2;
+        }
+        
+        /* Título centrado */
+        .reveal .title-slide {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        /* Párrafos */
+        .reveal p {
+            font-size: 0.75em;
+            line-height: 1.4;
+            margin-bottom: 0.5em;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+        
+        /* Listas */
+        .reveal ul, .reveal ol {
+            margin-left: 1em;
+            margin-bottom: 0.5em;
+            font-size: 0.7em;
+            line-height: 1.4;
+        }
+        
+        .reveal li {
+            margin-bottom: 0.3em;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+        
+        /* Código inline */
+        .reveal code {
+            background-color: #f5f5f5;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-size: 0.65em;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            color: #c7254e;
+            border: 1px solid #e1e1e1;
+        }
+        
+        /* Bloques de código */
+        .reveal pre {
+            width: 100%;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+            border-radius: 4px;
+            margin: 0.5em 0;
+            overflow: hidden;
+        }
+        
+        .reveal pre code {
+            display: block;
+            padding: 10px 15px;
+            max-height: 400px;
+            overflow-y: auto;
+            font-size: 0.55em;
+            line-height: 1.3;
+            background-color: #2d2d2d;
+            color: #f8f8f2;
+            border: none;
+            word-wrap: normal;
+            white-space: pre;
+        }
+        
+        /* Colores temáticos */
+        .advantage {
+            color: #2e7d32;
+            font-weight: 600;
+        }
+        
+        .disadvantage {
+            color: #c62828;
+            font-weight: 600;
+        }
+        
+        .highlight {
+            background-color: #fff9c4;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: 500;
+        }
+        
+        /* Mejoras visuales */
+        .reveal strong {
+            color: #1a237e;
+            font-weight: 600;
+        }
+        
+        .reveal em {
+            font-style: italic;
+            color: #555;
+        }
+        
+        /* Ajustes para fragmentos */
+        .reveal .fragment {
+            word-wrap: break-word;
+        }
+        
+        /* Espaciado mejorado */
+        .reveal section > * {
+            max-width: 100%;
+        }
+        
+        /* Scrollbar personalizado para código */
+        .reveal pre code::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        
+        .reveal pre code::-webkit-scrollbar-track {
+            background: #1e1e1e;
+        }
+        
+        .reveal pre code::-webkit-scrollbar-thumb {
+            background: #555;
+            border-radius: 4px;
+        }
+        
+        .reveal pre code::-webkit-scrollbar-thumb:hover {
+            background: #777;
+        }
+    </style>
+</head>
+<body>
+    <div class="reveal">
+        <div class="slides">
+            <!-- Título -->
+            <section class="title-slide">
+                <h1>Simulaciones de Montecarlo</h1>
+                <p style="font-size: 0.9em; margin-top: 1em;">Investigación Operativa</p>
+            </section>
+
+            <!-- Introducción -->
+            <section>
+                <h2>Introducción</h2>
+                <p>La <strong>Simulación de Montecarlo</strong> es una forma de usar el azar y las probabilidades para entender mejor problemas que tienen muchas variables inciertas.</p>
+                <p class="fragment">El nombre viene del famoso casino de Monte Carlo, porque este método se basa justamente en el azar.</p>
+                <div class="fragment">
+                    <p style="font-style: italic; margin-top: 0.5em; font-size: 0.7em;">Casino de Monte Carlo, Principado de Mónaco, Europa.</p>
+                </div>
+            </section>
+
+            <!-- Concepto principal -->
+            <section>
+                <h2>¿Qué es?</h2>
+                <p>En lugar de hacer una sola cuenta o fórmula, Montecarlo consiste en:</p>
+                <ul>
+                    <li class="fragment">Repetir muchas veces un mismo cálculo</li>
+                    <li class="fragment">Usar distintos valores aleatorios</li>
+                    <li class="fragment">Ver qué resultados pueden darse y con qué frecuencia</li>
+                </ul>
+                <div class="fragment" style="margin-top: 0.8em;">
+                    <p><strong>Ejemplo:</strong> Si queremos saber cuánto puede tardar un proyecto, podemos simular cientos o miles de veces cambiando los tiempos de cada tarea al azar (dentro de un rango realista).</p>
+                    <p>Así obtenemos un promedio y un rango de posibilidades: cuál es el caso más rápido, el más lento y el más probable.</p>
+                </div>
+            </section>
+
+            <!-- ¿Para qué sirve? -->
+            <section>
+                <h2>¿Para qué sirve?</h2>
+                <p>Se usa cuando hay <strong>incertidumbre</strong> o muchas variables que no se pueden controlar exactamente.</p>
+                <h3 style="margin-top: 0.5em;">Algunos ejemplos:</h3>
+                <ul>
+                    <li class="fragment"><strong>Finanzas:</strong> estimar ganancias o pérdidas según cambios del mercado.</li>
+                    <li class="fragment"><strong>Gestión de proyectos:</strong> prever si una obra terminará a tiempo.</li>
+                    <li class="fragment"><strong>Ingeniería:</strong> probar combinaciones sin gastar materiales reales.</li>
+                    <li class="fragment"><strong>Negocios:</strong> estimar ventas o comportamientos de clientes.</li>
+                </ul>
+                <p class="fragment" style="margin-top: 0.5em;"><strong>Lo importante:</strong> No da una sola respuesta, sino un conjunto de resultados posibles con sus probabilidades.</p>
+            </section>
+
+            <!-- Conceptos básicos -->
+            <section>
+                <h2>Conceptos básicos</h2>
+            </section>
+
+            <section>
+                <h3>Evento incierto</h3>
+                <p>Es cualquier situación donde no sabemos el resultado exacto hasta que pasa.</p>
+                <p class="fragment"><strong>Ejemplos:</strong></p>
+                <ul class="fragment">
+                    <li>Cuánto vas a tardar en un trámite</li>
+                    <li>Si llueve mañana</li>
+                    <li>Cuánta gente va a entrar a un negocio</li>
+                </ul>
+            </section>
+
+            <section>
+                <h3>Resultado aleatorio</h3>
+                <p>Es el valor que puede salir en cada intento.</p>
+                <p class="fragment"><strong>Ejemplo:</strong> Si tiras un dado, puede tocar cualquier número del 1 al 6.</p>
+                <p class="fragment">Cada número es un posible resultado del azar.</p>
+            </section>
+
+            <section>
+                <h3>Comportamiento probable</h3>
+                <p>En lugar de decir <span class="highlight">"esto va a pasar seguro"</span>, decimos:</p>
+                <p class="fragment" style="font-style: italic; margin-left: 1em;">"Lo más probable es que pase esto, pero también puede pasar esto otro."</p>
+                <p class="fragment" style="margin-top: 0.5em;">Así, entendemos mejor qué tan variable puede ser algo.</p>
+            </section>
+
+            <section>
+                <h3>Números generados al azar</h3>
+                <p>La computadora genera valores aleatorios como si tirara un dado digital.</p>
+                <p class="fragment">Cada número representa una posible realidad.</p>
+                <p class="fragment">Cuantos más valores usamos, más completa es la simulación.</p>
+            </section>
+
+            <section>
+                <h3>Repeticiones o simulaciones</h3>
+                <p>Cada repetición del experimento es una simulación diferente.</p>
+                <p class="fragment">Es como <span class="highlight">"probar el futuro"</span> una y otra vez.</p>
+                <p class="fragment">Mientras más veces se repite, los resultados se vuelven más estables y realistas.</p>
+            </section>
+
+            <section>
+                <h3>Sacar conclusiones</h3>
+                <p>Después se analizan todos los resultados juntos:</p>
+                <ul>
+                    <li class="fragment">Cuál fue el más común</li>
+                    <li class="fragment">Cuál fue el más alto y el más bajo</li>
+                    <li class="fragment">Cuánto se repitieron los valores</li>
+                </ul>
+                <p class="fragment" style="margin-top: 0.5em;">Así obtenemos un <strong>rango de resultados</strong> en lugar de una sola respuesta.</p>
+            </section>
+
+            <!-- ¿Cómo funciona? -->
+            <section>
+                <h2>¿Cómo funciona paso a paso?</h2>
+            </section>
+
+            <section>
+                <h3>Paso 1: Definir el problema</h3>
+                <p>¿Qué queremos analizar?</p>
+                <p class="fragment"><strong>Ejemplo:</strong> Cuánto tiempo tarda un pedido</p>
+                <ul class="fragment">
+                    <li>Algunos llegan en 2 días</li>
+                    <li>Otros en 3 o 4</li>
+                    <li>A veces en 5 si hay demoras</li>
+                </ul>
+            </section>
+
+            <section>
+                <h3>Paso 2: Elegir las variables inciertas</h3>
+                <p>¿Qué cosas cambian y dentro de qué valores?</p>
+                <p class="fragment"><strong>Siguiendo el ejemplo:</strong></p>
+                <ul class="fragment">
+                    <li>La variable incierta es el <strong>tiempo de entrega</strong></li>
+                    <li>Puede variar según clima, tránsito, stock, etc.</li>
+                    <li>Puede tomar valores entre <strong>2 y 5 días</strong></li>
+                    <li>Con mayor probabilidad de estar cerca de <strong>3 días</strong></li>
+                </ul>
+            </section>
+
+            <section>
+                <h3>Paso 3: Generar datos al azar</h3>
+                <p>La computadora genera números aleatorios dentro de ese rango (2 a 5).</p>
+                <p class="fragment">Cada número representa un pedido simulado:</p>
+                <ul class="fragment">
+                    <li>Uno llega en 2 días</li>
+                    <li>Otro en 3 días</li>
+                    <li>Y así sucesivamente...</li>
+                </ul>
+            </section>
+
+            <section>
+                <h3>Paso 4: Correr muchas simulaciones</h3>
+                <p>Se repite el proceso <strong>cientos o miles de veces</strong>.</p>
+                <p class="fragment">Cuantas más veces lo hacemos, más confiable se vuelve el promedio.</p>
+            </section>
+
+            <section>
+                <h3>Paso 5: Analizar los resultados</h3>
+                <p>Se obtiene un promedio y una idea de cuánto puede variar el resultado:</p>
+                <ul>
+                    <li class="fragment">El <strong>promedio</strong> de tiempo (por ejemplo, 3,2 días)</li>
+                    <li class="fragment">El <strong>mínimo y máximo</strong> (2 y 5 días)</li>
+                    <li class="fragment">Y cuántas veces se repitió cada valor</li>
+                </ul>
+                <p class="fragment" style="margin-top: 0.5em;">Así entendemos cuánto puede variar el tiempo real de entrega, sin tener que esperar meses de datos reales.</p>
+            </section>
+
+            <!-- Ventajas y Desventajas -->
+            <section>
+                <h2>Ventajas y Desventajas</h2>
+            </section>
+
+            <section>
+                <h2 class="advantage">Ventajas ✅</h2>
+                <ul>
+                    <li class="fragment">Fácil de aplicar una vez entendido el método.</li>
+                    <li class="fragment">Permite probar miles de escenarios sin hacerlo en la vida real.</li>
+                    <li class="fragment">Ayuda a tomar decisiones viendo lo mejor, lo peor y lo probable.</li>
+                    <li class="fragment">Se puede usar en Excel, Python o programas especializados.</li>
+                </ul>
+            </section>
+
+            <section>
+                <h2 class="disadvantage">Desventajas ❌</h2>
+                <ul>
+                    <li class="fragment">Si las suposiciones son malas (rangos o probabilidades incorrectas), los resultados no sirven.</li>
+                    <li class="fragment">Puede requerir muchas repeticiones para que el promedio sea confiable.</li>
+                    <li class="fragment">No da una solución exacta, sino una aproximación.</li>
+                </ul>
+            </section>
+
+            <!-- Herramientas -->
+            <section>
+                <h2>Herramientas para simular</h2>
+                <ul>
+                    <li class="fragment">
+                        <strong>Excel o Google Sheets:</strong> con <code>RAND()</code> se pueden generar valores aleatorios y crear simulaciones básicas.
+                    </li>
+                    <li class="fragment">
+                        <strong>Python o R:</strong> permiten hacer simulaciones más rápidas y con gráficos automáticos.
+                    </li>
+                    <li class="fragment">
+                        <strong>Programas especializados:</strong> como Minitab o Arena, usados en empresas y universidades.
+                    </li>
+                </ul>
+            </section>
+
+            <!-- Ejemplo de código -->
+            <section>
+                <h2>Ejemplo práctico</h2>
+                <p><strong>Simulación de Montecarlo: tiempo de entrega de pedidos</strong></p>
+            </section>
+
+            <section>
+                <h3>Código Python</h3>
+                <pre><code data-trim data-noescape>
+Importamos las librerías necesarias
+
+import random                    para generar números aleatorios
+import matplotlib.pyplot as plt   para graficar resultados
+
+Cantidad de simulaciones que vamos a realizar
+n = 1000   significa que simularemos 1000 pedidos
+
+Creamos una lista vacía para guardar los tiempos simulados
+tiempos = []
+
+# Bucle que genera los valores al azar
+# En este caso, cada tiempo de entrega será un número entre 2 y 5 días
+for i in range(n):
+    tiempo = random.uniform(2, 5)   genera un número decimal entre 2 y 5
+    tiempos.append(tiempo)          lo guarda en la lista 'tiempos'
+
+# Calculamos el promedio (media) de los tiempos obtenidos
+promedio = sum(tiempos) / len(tiempos)
+
+# Mostramos el resultado por consola
+print(f"Promedio de entrega: {promedio:.2f} días")
+                </code></pre>
+            </section>
+
+            <section>
+                <h3>Visualización de resultados</h3>
+                <pre><code data-trim data-noescape>
+
+ Gráfico de resultados
+
+
+ Creamos un histograma (gráfico de barras) para visualizar 
+ la frecuencia de los tiempos simulados
+plt.hist(tiempos, bins=10, color='skyblue', edgecolor='black')
+
+ Dibujamos una línea vertical para marcar el promedio
+plt.axvline(promedio, color='red', linestyle='dashed', 
+            linewidth=2, label=f'Promedio: {promedio:.2f}')
+
+ Agregamos título y etiquetas para que sea claro
+plt.title("Distribución de tiempos de entrega simulados")
+plt.xlabel("Días")
+plt.ylabel("Frecuencia")
+
+ Mostramos la leyenda (donde aparece el valor del promedio)
+plt.legend()
+
+ Finalmente, mostramos el gráfico en pantalla
+plt.show()
+                </code></pre>
+            </section>
+
+            <section>
+                <h3>¿Qué hace este código paso a paso?</h3>
+                <ol>
+                    <li class="fragment">Genera <strong>1000 pedidos simulados</strong> con tiempos aleatorios entre 2 y 5 días.</li>
+                    <li class="fragment">Calcula el <strong>promedio</strong> de todas esas simulaciones.</li>
+                    <li class="fragment">Dibuja un <strong>gráfico</strong> donde se ve qué tan seguido aparecen los distintos tiempos.</li>
+                    <li class="fragment">Marca con una <strong>línea roja</strong> el promedio general (alrededor de 3,2 días).</li>
+                </ol>
+            </section>
+
+            <!-- Cierre -->
+            <section class="title-slide">
+                <h1>¡Gracias!</h1>
+                <p style="font-size: 0.9em; margin-top: 1em;">Simulaciones de Montecarlo</p>
+                <p style="font-size: 0.8em; margin-top: 0.5em;">Investigación Operativa</p>
+            </section>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/dist/reveal.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/plugin/notes/notes.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/plugin/markdown/markdown.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/plugin/highlight/highlight.js"></script>
+    <script>
+        Reveal.initialize({
+            hash: true,
+            plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ],
+            transition: 'slide',
+            backgroundTransition: 'fade'
+        });
+    </script>
+</body>
+</html>
