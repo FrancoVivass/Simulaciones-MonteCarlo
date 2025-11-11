@@ -1,0 +1,201 @@
+/* Custom styles for Reveal.js presentation with black background and red text */
+
+/* Override Reveal.js theme colors - Black background, Red text */
+.reveal {
+	background: #000000;
+	color: #ff0000;
+}
+
+.reveal .slides section {
+	color: #ff0000;
+}
+
+/* Titles */
+.reveal h1,
+.reveal h2,
+.reveal h3,
+.reveal h4,
+.reveal h5,
+.reveal h6 {
+	color: #ff0000;
+	text-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+}
+
+.reveal h1 {
+	font-size: 2em;
+}
+
+.reveal h2 {
+	font-size: 1.5em;
+	border-bottom: 2px solid #ff0000;
+	padding-bottom: 0.2em;
+	margin-bottom: 0.4em;
+}
+
+.reveal h3 {
+	font-size: 1.2em;
+	color: #ff3333;
+}
+
+/* Paragraphs */
+.reveal p {
+	color: #ff6666;
+	font-size: 0.85em;
+	line-height: 1.5;
+}
+
+.reveal strong {
+	color: #ff0000;
+	font-weight: bold;
+}
+
+.reveal em {
+	color: #ff3333;
+	font-style: italic;
+}
+
+/* Lists */
+.reveal ul,
+.reveal ol {
+	color: #ff6666;
+}
+
+.reveal ul li,
+.reveal ol li {
+	color: #ff6666;
+	font-size: 0.8em;
+	line-height: 1.4;
+	margin: 0.3em 0;
+}
+
+/* Links */
+.reveal a {
+	color: #ff6666;
+	text-decoration: underline;
+}
+
+.reveal a:hover {
+	color: #ff0000;
+	text-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+}
+
+/* Portada styling */
+.reveal .subtitle {
+	color: #ff6666 !important;
+	font-size: 1.1em !important;
+	margin: 0.4em 0;
+}
+
+.reveal .authors {
+	color: #ff9999 !important;
+	font-size: 0.95em !important;
+	margin: 0.4em 0;
+}
+
+.reveal .course {
+	color: #ffcccc !important;
+	font-size: 0.85em !important;
+	margin-top: 0.8em;
+}
+
+/* Highlight */
+.reveal .highlight-red {
+	background: rgba(255, 0, 0, 0.2) !important;
+	padding: 0.3em 0.5em !important;
+	border-left: 3px solid #ff0000 !important;
+	border-radius: 4px !important;
+	color: #ff0000 !important;
+	font-weight: bold !important;
+}
+
+/* Images */
+.reveal img {
+	border: 3px solid #ff0000;
+	border-radius: 10px;
+	box-shadow: 0 0 15px rgba(255, 0, 0, 0.3);
+	max-width: 100%;
+	height: auto;
+}
+
+/* Code blocks */
+.reveal pre {
+	background: #1e1e1e;
+	border: 2px solid #ff0000;
+	border-radius: 8px;
+	box-shadow: 0 0 15px rgba(255, 0, 0, 0.3);
+	width: 100%;
+	box-sizing: border-box;
+}
+
+.reveal code {
+	color: #ff9999;
+	font-family: 'Courier New', monospace;
+	font-size: 0.75em;
+	line-height: 1.3;
+}
+
+.reveal pre code {
+	background: transparent;
+	padding: 0;
+}
+
+/* Progress bar */
+.reveal .progress {
+	color: #ff0000;
+}
+
+.reveal .progress span {
+	background: #ff0000;
+	box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+}
+
+/* Controls */
+.reveal .controls {
+	color: #ff0000;
+}
+
+/* Background transitions */
+.reveal .slides section[data-background] {
+	background-color: #000000;
+}
+
+/* Fragment animations */
+.reveal .slides section .fragment {
+	opacity: 0;
+	visibility: hidden;
+	transition: all 0.3s ease;
+}
+
+.reveal .slides section .fragment.visible {
+	opacity: 1;
+	visibility: visible;
+}
+
+/* Adjust reveal.js default sizing */
+.reveal .slides section {
+	font-size: 0.9em;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+	.reveal h1 {
+		font-size: 1.8em;
+	}
+	
+	.reveal h2 {
+		font-size: 1.3em;
+	}
+	
+	.reveal h3 {
+		font-size: 1.1em;
+	}
+	
+	.reveal p {
+		font-size: 0.75em;
+	}
+	
+	.reveal ul li,
+	.reveal ol li {
+		font-size: 0.75em;
+	}
+}
